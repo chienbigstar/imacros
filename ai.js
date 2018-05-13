@@ -26,7 +26,7 @@
     tbody += '<tr brokerID="1" symbolId="8"> <td>USDCHF</td> <td id="bet_1_8"></td>  </tr>';
     tbody += '<tr brokerID="1" symbolId="9"> <td>DIAMOND</td> <td id="bet_1_9"></td>   </tr>';
 
-    html = '<button id="start">Start</button>  ListMoney: <input style="border:1px red solid" id="l_money" />';
+    html = '<button id="start">Start</button>  ListMoney: <input size="50" style="border:1px red solid" id="l_money" /> Chot Loi: <input style="border:1px red solid" id="c_loi" type="number"/>';
     html += '<div>Start Balance: <span id="balance"></span>$ Clock: <span id="clock"></span> Current Balance: <span id="profit">0</span>$ </div><br>';
     html += '<style>table {color:black; font-family: arial, sans-serif; border-collapse: collapse; width: 100%; } td, th { border: 1px solid #dddddd; text-align: left; padding: 8px; }</style>';
     html += '<table>' + thead + tbody + '</table>';
@@ -41,6 +41,8 @@
         lMoney = $('#l_money').val();
         $('#l_money').attr("disabled", true);
         $listMoney = lMoney.split(',');
+        $cLoi = parseFloat($('#c_loi').val());
+        $('#c_loi').attr("disabled", true);
         while(true) {
           graph = $graphs[$indexGraph];
           brokerID = graph['brokerID'];
@@ -91,6 +93,10 @@
       if ($indexGraph > 8) $indexGraph = 0;
     }
     $pages['p1_updateBalance']();
+    loi = $balance - $startMoney;
+    if (loi >= $cLoi) {
+    	window.close();
+    }
     return 1;
   }
   $pages['p1_beat'] = function(color, brokerID, symbolId) {
@@ -101,7 +107,7 @@
     $this.post('https://order.aibroker.co/PlaceBet/Bet', params);
     bet = $('#bet_'+brokerID+'_'+symbolId);
     temp = $(bet).text();
-    color = color == 'x' ? 'Xanh_' : 'Ð?_';
+    color = color == 'x' ? 'Xanh_' : 'Ðo_';
     $(bet).html(temp + '->' + color + amount + '$');
     // $.ajax({
     //   url: 'https://order.aibroker.co/PlaceBet/Bet',
@@ -240,6 +246,7 @@
   $listMoney = [];
   $indexColor = 0;
   $listColor = ['x', 'd', 'd', 'd', 'x', 'x', 'x', 'd', 'd', 'd', 'x', 'x'];
+  $cLoi = 0;
   //////////////////////////////////////////// 
   window.onbeforeunload = function(){
     return "Are you sure you want to close the window?";

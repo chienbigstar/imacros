@@ -15,46 +15,50 @@
     return request.response;
   };
   $pages['p1_makeScreen'] =  function() {
-    thead = '<tr> <th>Graph</th> <th>Bet</th> </tr>';
-    tbody = '<tr brokerID="1" symbolId="1"> <td>EURUSD</td> <td id="bet_1_1"></td> </tr>';
-    tbody += '<tr brokerID="1" symbolId="2"> <td>AUDUSD</td> <td id="bet_1_2"></td>   </tr>';
-    tbody += '<tr brokerID="1" symbolId="3"> <td>GBPUSD</td> <td id="bet_1_3"></td>   </tr>';
-    tbody += '<tr brokerID="1" symbolId="4"> <td>USDJPY</td> <td id="bet_1_4"></td> </tr>';
-    tbody += '<tr brokerID="1" symbolId="5"> <td>EURGBP</td> <td id="bet_1_5"></td>  </tr>';
-    tbody += '<tr brokerID="1" symbolId="6"> <td>EURJPY</td> <td id="bet_1_6"></td>  </tr>';
-    tbody += '<tr brokerID="1" symbolId="7"> <td>USDCAD</td> <td id="bet_1_7"></td> </tr>';
-    tbody += '<tr brokerID="1" symbolId="8"> <td>USDCHF</td> <td id="bet_1_8"></td>  </tr>';
-    tbody += '<tr brokerID="1" symbolId="9"> <td>DIAMOND</td> <td id="bet_1_9"></td>   </tr>';
-
-    html = '<button id="start">Start</button>  ListMoney: <input size="50" style="border:1px red solid" id="l_money" /> Chot Loi: <input style="border:1px red solid" id="c_loi" type="number"/>';
-    html += '<div>Start Balance: <span id="balance"></span>$ Clock: <span id="clock"></span> Current Balance: <span id="profit">0</span>$ </div><br>';
+    thead = '<tr> <th>Graph</th> <th>Bet</th> <th>Profit</th> <th><input type=checkbox id="check_all"/></th> </tr>';
+    tbody = '<tr brokerID="1" symbolId="1"> <td>EURUSD</td> <td id="bet_1_1"></td> <td></td> <td><input class="action" type="checkbox"/></td> </tr>';
+    tbody += '<tr brokerID="1" symbolId="2"> <td>AUDUSD</td> <td id="bet_1_2"></td> <td></td> <td><input class="action" type="checkbox"/></td> </tr>';
+    tbody += '<tr brokerID="1" symbolId="3"> <td>GBPUSD</td> <td id="bet_1_3"></td> <td></td> <td><input class="action" type="checkbox"/></td> </tr>';
+    tbody += '<tr brokerID="1" symbolId="4"> <td>USDJPY</td> <td id="bet_1_4"></td> <td></td> <td><input class="action" type="checkbox"/></td> </tr>';
+    tbody += '<tr brokerID="1" symbolId="5"> <td>EURGBP</td> <td id="bet_1_5"></td> <td></td> <td><input class="action" type="checkbox"/></td> </tr>';
+    tbody += '<tr brokerID="1" symbolId="6"> <td>EURJPY</td> <td id="bet_1_6"></td> <td></td> <td><input class="action" type="checkbox"/></td> </tr>';
+    tbody += '<tr brokerID="1" symbolId="7"> <td>USDCAD</td> <td id="bet_1_7"></td> <td></td> <td><input class="action" type="checkbox"/></td> </tr>';
+    tbody += '<tr brokerID="1" symbolId="8"> <td>USDCHF</td> <td id="bet_1_8"></td> <td></td> <td><input class="action" type="checkbox"/></td> </tr>';
+    tbody += '<tr brokerID="1" symbolId="9"> <td>DIAMOND</td> <td id="bet_1_9"></td> <td></td> <td><input class="action" type="checkbox"/></td> </tr>';
+    tbody += '<tr brokerID="2" symbolId="1"> <td>Bitcoin</td> <td id="bet_2_1"></td> <td></td> <td><input class="action" type="checkbox"/></td> </tr>';
+    tbody += '<tr brokerID="2" symbolId="2"> <td>Ethereum</td> <td id="bet_2_2"></td> <td></td> <td><input class="action" type="checkbox"/></td> </tr>';
+    tbody += '<tr brokerID="2" symbolId="3"> <td>Bitcoin Cash</td> <td id="bet_2_3"></td> <td></td> <td><input class="action" type="checkbox"/></td> </tr>';
+    tbody += '<tr brokerID="2" symbolId="4"> <td>Ripple</td> <td id="bet_2_4"></td> <td></td> <td><input class="action" type="checkbox"/></td> </tr>';
+    tbody += '<tr brokerID="2" symbolId="5"> <td>Litecoin</td> <td id="bet_2_5"></td> <td></td> <td><input class="action" type="checkbox"/></td> </tr>';
+    tbody += '<tr brokerID="2" symbolId="6"> <td>IOTA</td> <td id="bet_2_6"></td> <td></td> <td><input class="action" type="checkbox"/></td> </tr>';
+    tbody += '<tr brokerID="2" symbolId="7"> <td>NEM</td> <td id="bet_2_7"></td> <td></td> <td><input class="action" type="checkbox"/></td> </tr>';
+    tbody += '<tr brokerID="2" symbolId="8"> <td>Dash</td> <td id="bet_2_8"></td> <td></td> <td><input class="action" type="checkbox"/></td> </tr>';
+    html = '<div>Balance: <span id="balance"></span>$ Clock: <span id="clock"></span> Profit: <span id="profit">0</span>$ </div><br>';
     html += '<style>table {color:black; font-family: arial, sans-serif; border-collapse: collapse; width: 100%; } td, th { border: 1px solid #dddddd; text-align: left; padding: 8px; }</style>';
     html += '<table>' + thead + tbody + '</table>';
-    $('html').attr('style', 'background:white;color:black');
-    $('body').html(html);
-    $('body').attr('style', 'background:white;color:black;margin-bottom:100px');
-    window.onbeforeunload = function(){
-      return "Refresh trang mà dang vào chu?i là sai sai dó.";
-    }
-    $('#start').click(async function() {
-        $(event.target).attr("disabled", true);
-        lMoney = $('#l_money').val();
-        $('#l_money').attr("disabled", true);
-        $listMoney = lMoney.split(',');
-        $cLoi = parseFloat($('#c_loi').val());
-        $('#c_loi').attr("disabled", true);
-        while(true) {
-          graph = $graphs[$indexGraph];
-          brokerID = graph['brokerID'];
-          symbolId = graph['symbolId'];
-          await $pages['p1_doPP'](brokerID, symbolId);
-        }
+    $('html').attr('style', 'background-image:none;color:black');
+    $('html').html(html);
+    actions = $('.action');
+    $(actions).each(function() {
+      $(this).change(
+        async function() {
+          if(this.checked) {
+            while(true) {
+              parent = $(this).parent().parent();
+              brokerID = $(parent).attr('brokerID');
+              symbolId = $(parent).attr('symbolId');
+              await $pages['p1_doPP'](brokerID, symbolId);
+            }
+          } else {
+            allow = false;
+          }
+      });
     });
-    // actions = $('.action');
-    // $(actions).each(function() {
-    //   $(this).change(
-    
-    // });
+    $('#check_all').click(function() {
+    $('.action').each(function() {
+      $(this).click();
+    });
+    });
   }
 
   $this['wait'] = async function(t) {
@@ -68,11 +72,25 @@
       await $pages['p1_waitOverNode']();
       return 1;
     }
-    if (second < 3) {
+    if (second < 5) {
       await $pages['p1_waitOverNode']();
       return 1;
     }
-    color = $listColor[$indexColor];
+    tableColor = $pages['p1_getTableColor'](brokerID, symbolId);
+    // verticalTableColor = $pages['p1_getVerticalTableColor'](tableColor);
+    // num_side = tableColor.length % 6;
+    // row = verticalTableColor[num_side];
+    num_side = tableColor.length % 6
+    if (num_side != 0) {
+      await $pages['p1_waitOverNode']();
+      return 1;
+    }
+    tl = tableColor.reverse();
+    lastColumn = [tl[0], tl[1], tl[2], tl[3], tl[4], tl[5]];
+    lastColumn = lastColumn.reverse();
+    lastColumn = lastColumn.join('');
+ 
+    color = listColor[$grups[brokerID + '_' + symbolId]['index']];
     $pages['p1_beat'](color, brokerID, symbolId);
     await $pages['p1_waitOverNode']();
     tableColor = $pages['p1_getTableColor'](brokerID, symbolId);
@@ -81,48 +99,39 @@
 
     }
     else if (tableColor[0] != color) {
-      $indexColor++;
-      if ($indexColor > ($listMoney.length-1)) {
-        window.close();
-      }
+      $grups[brokerID + '_' + symbolId]['index'] = $grups[brokerID + '_' + symbolId]['index'] + 1;
     } else {
+      $grups[brokerID + '_' + symbolId]['index'] = 0;
       bet = $('#bet_'+brokerID+'_'+symbolId);
       $(bet).html('');
-      $indexColor = 0;
-      $indexGraph = $indexGraph + 1;
-      if ($indexGraph > 8) $indexGraph = 0;
-    }
-    $pages['p1_updateBalance']();
-    loi = $balance - $startMoney;
-    if (loi >= $cLoi) {
-    	window.close();
     }
     return 1;
   }
   $pages['p1_beat'] = function(color, brokerID, symbolId) {
     choice = color == 'x' ? 1 : 2;
-    amount = $listMoney[$indexColor];
+    amount = listMoney[$grups[brokerID + '_' + symbolId]['index']];
+
     params = {brokerId:brokerID,symbolId:symbolId,BetChoice:choice,BetFrom:'w',Stake:amount}
 
-    $this.post('https://order.aibroker.co/PlaceBet/Bet', params);
-    bet = $('#bet_'+brokerID+'_'+symbolId);
-    temp = $(bet).text();
-    color = color == 'x' ? 'Xanh_' : 'Do_';
-    $(bet).html(temp + '->' + color + amount + '$');
-    // $.ajax({
-    //   url: 'https://order.aibroker.co/PlaceBet/Bet',
-    //   headers: {
-    //     'Content-type': 'application/x-www-form-urlencoded'
-    //   },
-    //   method: 'POST',
-    //   dataType: 'json',
-    //   data: params,
-    //   success: function(data){
-    //     bet = $('#bet_'+brokerID+'_'+symbolId);
-    //     color = color == 'x' ? 'Xanh_' : 'Do_';
-    //     $(bet).html(color + amount);
-    //   }
-    // });
+    // $this.post('https://order.aibroker.co/PlaceBet/Bet', params);
+    // bet = $('#bet_'+brokerID+'_'+symbolId);
+    // color = color == 'x' ? 'Xanh_' : 'Do_';
+    // $(bet).html(color + amount);
+    $.ajax({
+      url: 'https://order.aibroker.co/PlaceBet/Bet',
+      headers: {
+        'Content-type': 'application/x-www-form-urlencoded'
+      },
+      method: 'POST',
+      dataType: 'json',
+      data: params,
+      success: function(data){
+        bet = $('#bet_'+brokerID+'_'+symbolId);
+        temp = $(bet).text();
+        color = color == 'x' ? 'Xanh_' : 'Do_';
+        $(bet).html(temp + '->' + color + amount);
+      }
+    });
   }
   $pages['p1_stopPP'] = function(brokerID, symbolId) {
 
@@ -204,16 +213,18 @@
   }
   $pages['p1_waitOverNode'] = async function() {
     if (status != 'order') {
-      await $this.wait(5 + second);
+      await $this.wait(3 + second);
       return 1;
     } else {
-      await $this.wait(35 + second);
+      await $this.wait(33 + second);
       return 1;
     }
   }
   $pages['p1_updateBalance'] = function() {
     $balance = $pages['p1_getBalance']();
-    $('#profit').html($balance);
+    $('#balance').html($balance);
+    $profit = $balance - $startMoney;
+    $('#profit').html($profit);
   }
   $pages['p1_getBalance'] = function() {
     data = $this.post('https://order.aibroker.co/Home/GetSettledInfo', {});
@@ -221,6 +232,8 @@
     return data['Data']['NewBalance'];
   }
   /////////////////////////////////////////////
+  listMoney = [1,1,3,6,15,30];
+  listColor = ['x', 'd', 'd', 'd', 'x', 'x'];
   cus_length = null;
   brokerID = 1;
   symbolId = 1;
@@ -231,26 +244,26 @@
   $startMoney = 0;
   $balance = 0;
   $profit = 0;
-  $graphs =  [
-    {brokerID: 1, symbolId: 1},
-    {brokerID: 1, symbolId: 2},
-    {brokerID: 1, symbolId: 3},
-    {brokerID: 1, symbolId: 4},
-    {brokerID: 1, symbolId: 5},
-    {brokerID: 1, symbolId: 6},
-    {brokerID: 1, symbolId: 7},
-    {brokerID: 1, symbolId: 8},
-    {brokerID: 1, symbolId: 9},
-  ];
-  $indexGraph = 0;
-  $listMoney = [];
-  $indexColor = 0;
-  $listColor = ['x', 'd', 'd', 'd', 'x', 'x', 'x', 'd', 'd', 'd', 'x', 'x'];
-  $cLoi = 0;
+  $grups = {
+    '1_1': {index: 0, inChuoi: false},
+    '1_2': {index: 0, inChuoi: false},
+    '1_3': {index: 0, inChuoi: false},
+    '1_4': {index: 0, inChuoi: false},
+    '1_5': {index: 0, inChuoi: false},
+    '1_6': {index: 0, inChuoi: false},
+    '1_7': {index: 0, inChuoi: false},
+    '1_8': {index: 0, inChuoi: false},
+    '1_9': {index: 0, inChuoi: false},
+    '2_1': {index: 0, inChuoi: false},
+    '2_2': {index: 0, inChuoi: false},
+    '2_3': {index: 0, inChuoi: false},
+    '2_4': {index: 0, inChuoi: false},
+    '2_5': {index: 0, inChuoi: false},
+    '2_6': {index: 0, inChuoi: false},
+    '2_7': {index: 0, inChuoi: false},
+    '2_8': {index: 0, inChuoi: false},
+  };
   //////////////////////////////////////////// 
-  window.onbeforeunload = function(){
-    return "Are you sure you want to close the window?";
-  }
   $pages['p1_makeScreen']();
   $startMoney = 0;
   $balance =  0;
@@ -259,8 +272,6 @@
   window.clearInterval(window['clockInterval']);
   //////////////////
   $balance = $pages['p1_getBalance']();
-  $('#balance').html($balance);
-  $('#profit').html($balance);
   $startMoney = $balance;
   $pages['p1_updateClock']();
   if (status == 'order') {
@@ -268,5 +279,7 @@
   } else {
     $this.wait(second);
   }
-///////////
-
+  while(true) {
+    $pages['p1_updateBalance']();
+    await $this.wait(30);
+  }

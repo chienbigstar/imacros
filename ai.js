@@ -34,7 +34,7 @@
     $('body').html(html);
     $('body').attr('style', 'background:white;color:black;margin-bottom:100px');
     window.onbeforeunload = function(){
-      return "Refresh trang mà dang vào chu?i là sai sai dó.";
+      return "Refresh trang mÃ  dang vÃ o chu?i lÃ  sai sai dÃ³.";
     }
     $('#start').click(async function() {
         $(event.target).attr("disabled", true);
@@ -107,7 +107,7 @@
     $this.post('https://order.aibroker.co/PlaceBet/Bet', params);
     bet = $('#bet_'+brokerID+'_'+symbolId);
     temp = $(bet).text();
-    color = color == 'x' ? 'Xanh_' : 'Ðo_';
+    color = color == 'x' ? 'Xanh_' : 'Do_';
     $(bet).html(temp + '->' + color + amount + '$');
     // $.ajax({
     //   url: 'https://order.aibroker.co/PlaceBet/Bet',

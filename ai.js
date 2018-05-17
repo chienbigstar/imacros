@@ -307,7 +307,7 @@
     return data['Data']['NewBalance'];
   }
   /////////////////////////////////////////////
-  listMoney = [1,2,4,8];
+  listMoney = [1,2,1,1];
   listColor = ['x', 'd', 'd', 'd', 'x', 'x'];
   cus_length = null;
   allow = false;
